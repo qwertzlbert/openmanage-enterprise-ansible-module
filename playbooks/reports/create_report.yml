@@ -1,0 +1,20 @@
+- hosts: omehosts
+  name: Create OMEnterprise report
+  gather_facts: False
+  
+  vars:
+    - reportName: "ReportName"
+
+  tasks:
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: create report
+    local_action: >
+       ome category=Report command=CreateReport omeip={{ omeip }}
+       reportName={{ reportName }}
+              
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json
+ 

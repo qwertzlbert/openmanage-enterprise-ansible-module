@@ -1,0 +1,20 @@
+- hosts: omehosts
+  name: export OMEnterprise report
+  gather_facts: False
+
+  # export report in given format.
+  # report will be safed localy on appliance ("/var/log/dell/omc/reports/<NameOfReport>.<Format>")
+  
+  vars:
+    - reportId: 2914
+    - dataFormat: csv
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: export report
+    local_action: >
+       ome category=Report command=DownloadReport omeip={{ omeip }}
+       reportId={{ reportId }} dataFormat={{ dataFormat }}

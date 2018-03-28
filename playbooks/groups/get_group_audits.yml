@@ -1,0 +1,18 @@
+- hosts: omehosts
+  name: Get OMEnterprise Groups and group hierachy changes
+  gather_facts: False
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=GroupsAudits
+
+  - name: Get groups and audits
+    local_action: >
+      ome category=Group command=GetGroupAudits omeip={{ omeip }}
+      omeuser={{ omeuser }} omepswd={{ omepswd }}
+    register: result
+
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json

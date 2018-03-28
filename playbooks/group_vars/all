@@ -1,0 +1,18 @@
+---
+
+# Here we define global variables for our server group, but if some servers
+# require custom values place these variables in /etc/ansible/hosts to override
+# for each individual host
+
+# ome credentials (example)
+omeuser: <Username>
+omepswd: <Password>
+
+# Misc
+emailRecipient: local@localhost.com
+
+# Discovery
+discStartAddress: 192.168.188.67 # start adress for discovery
+discEndAddress: 192.168.188.67 # end address for discovery
+
+

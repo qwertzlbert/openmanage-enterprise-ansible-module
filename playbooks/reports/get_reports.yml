@@ -1,0 +1,22 @@
+- hosts: omehosts
+  name: get OMEnterprise discovery jobs
+  gather_facts: False
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: Get Discovery Jobs
+    local_action: >
+      ome category=Report command=GetReports omeip={{ omeip }}
+      omeuser={{ omeuser }} omepswd={{ omepswd }}
+    register: result
+
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json
+
+### todo:
+### - option to get all report details
+### - option to get all reports as rows

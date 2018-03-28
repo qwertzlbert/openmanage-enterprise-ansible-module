@@ -1,0 +1,23 @@
+- hosts: omehosts
+  name: Remove OMEnterprise discovery Job
+  gather_facts: False
+
+# remove discovery job with the ID provided 
+  vars:
+    - jobId: 4
+
+  tasks:
+
+  # --- ----- --------------------------------------------------------
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: create discovery job for {{deviceType}}
+    local_action: >
+       ome category=Discovery command=RemoveJob omeip={{ omeip }}
+       discJobId={{ jobId }}
+       
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json
+ 

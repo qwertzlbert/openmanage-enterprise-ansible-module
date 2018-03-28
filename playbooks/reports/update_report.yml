@@ -1,0 +1,19 @@
+- hosts: omehosts
+  name: Update OMEnterprise report
+  gather_facts: False
+
+ 
+  vars:
+    - reportId: 11314
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: update report
+    local_action: >
+       ome category=Report command=UpdateReport omeip={{ omeip }}
+       reportId={{ reportId }}
+             
+ 

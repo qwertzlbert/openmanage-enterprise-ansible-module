@@ -1,0 +1,24 @@
+- hosts: omehosts
+  name: Import OMEnterprise discovery Jobs from csv
+  gather_facts: False
+
+# Input: (File Name placed in /tmp location)
+# Input: IPs to scan in .csv format
+
+  vars:
+    - jobCsvLocation: "sample.csv"
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: create discovery job for {{deviceType}}
+    local_action: >
+       ome category=Discovery command=ImportJob omeip={{ omeip }}
+       discIpsFileLocation={{ jobCsvLocation }}
+       
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json
+ 

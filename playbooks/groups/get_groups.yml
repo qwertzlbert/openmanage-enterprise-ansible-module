@@ -1,0 +1,18 @@
+- hosts: omehosts
+  name: Get OMEnterprise Groups
+  gather_facts: False
+
+
+  tasks:
+  - name: Define output file
+    include: set_output_file.yml type=Groups
+
+  - name: Get Groups
+    local_action: >
+      ome category=Group command=GetGroups omeip={{ omeip }}
+      omeuser={{ omeuser }} omepswd={{ omepswd }}
+    register: result
+
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json

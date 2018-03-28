@@ -1,0 +1,27 @@
+- hosts: omehosts
+  name: Create new OMEnterprise discovery Job
+  gather_facts: False
+
+  vars:
+    - jobName: testjob
+    - startIp: 192.168.188.67
+    - endIp: 192.168.188.67
+    - email: none@localhost.local
+    - deviceType: 1000
+
+  tasks:
+
+  # --- ----- --------------------------------------------------------
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: create discovery job for {{deviceType}}
+    local_action: >
+       ome category=Discovery command=NewJob omeip={{ omeip }}
+       discStartAddress={{startIp}} discEndAddress={{endIp}} discJobName={{jobName}}
+       discEmail={{email}} discDeviceType={{deviceType}}
+       
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json
+ 

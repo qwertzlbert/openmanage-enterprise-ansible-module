@@ -1,0 +1,19 @@
+- hosts: omehosts
+  name: Delete OMEnterprise report
+  gather_facts: False
+
+
+# ID of OME report to delete (e.g. '11264')
+  
+  vars:
+    - reportId: 11264
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: update report
+    local_action: >
+       ome category=Report command=DeleteReport omeip={{ omeip }}
+       reportId={{ reportId }}

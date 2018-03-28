@@ -1,0 +1,19 @@
+- hosts: omehosts
+  name: Get OMEnterprise warranties
+  gather_facts: False
+
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=Warranties
+
+  - name: Get Warrenties
+    local_action: >
+      ome category=Warranty command=GetWarranties omeip={{ omeip }}
+      omeuser={{ omeuser }} omepswd={{ omepswd }}
+    register: result
+
+  - name: Copy Jobs to output file
+    local_action: copy content={{ result | to_nice_json }}
+             dest={{template}}.json

@@ -1,0 +1,19 @@
+- hosts: omehosts
+  name: Run OMEnterprise report
+  gather_facts: False
+
+ # Outputs integer with unknown meaning
+ 
+ 
+  vars:
+    - reportId: 3214
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: update report
+    local_action: >
+       ome category=Report command=RunReport omeip={{ omeip }}
+       reportId={{ reportId }}
