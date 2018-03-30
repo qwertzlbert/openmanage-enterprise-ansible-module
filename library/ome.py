@@ -91,6 +91,13 @@ options:
 	required: false
 	description:
 	  - id of report
+  groupName:
+	required: false
+	description:
+	  - name for new group
+  groupParentId:
+	required: false
+	  - id of parent group
 author: "simon.schnell@dell.com", github: qwertzlbert
 """
 
@@ -125,6 +132,8 @@ def main():
 			discIpsFileLocation = dict(required=False, type='str', default=None),
 			reportName = dict(required=False, type='str', default=None),
 			reportId = dict(required=False, type='str', default=None),
+			groupName = dict(required=False, type='str' , default=None),
+			groupParentId = dict(required=False, type='str' , default=None),
 		),
 		supports_check_mode=False
 	)
@@ -143,12 +152,19 @@ def main():
 			}
 
 	# Attributes for disovery job
-	discovery_attributes = { 'startIp': module.params['discStartAddress'],
-				  'endIp' : module.params['discEndAddress'],
-				  'deviceType': module.params['discDeviceType'],
-				  'jobName': module.params['discJobName'],
-				  'email': module.params['discEmail'],
-				}
+	discovery_attributes = {'startIp': module.params['discStartAddress'],
+							'endIp' : module.params['discEndAddress'],
+							'deviceType': module.params['discDeviceType'],
+							'jobName': module.params['discJobName'],
+							'email': module.params['discEmail'],
+							}
+	
+	# Attributes for static group
+	# membership id needs to be 12 for static and 24 for dynamic groups
+	group_attributes = {'name': module.params['groupName'],
+						'membershipId': 12,
+						'parentId': module.params['groupParentId']	
+						}
 
 	# Build initial URI
 	root_uri = "https://" + params['omeip'] + "/api"
@@ -201,7 +217,7 @@ def main():
 		elif command == "GetGroupAudits":
 			result = ome_utils.get_group_audit("/GroupService/GroupAudits")
 		elif command == "CreateGroup":
-			result = ome_utils.create_group("/GroupService/Actions/GroupService.CreateGroup")
+			result = ome_utils.create_group("/GroupService/Actions/GroupService.CreateGroup", group_attributes)
 		else:
 			result = { 'ret': False, 'msg': 'Invalid Command'}		
 	

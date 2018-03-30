@@ -16,4 +16,4 @@
   - name: update report
     local_action: >
        ome category=Report command=RunReport omeip={{ omeip }}
-       reportId={{ reportId }}
+       reportId={{ reportId }} omeuser={{omeuser}} omepswd={{omepswd}}

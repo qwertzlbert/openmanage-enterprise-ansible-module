@@ -514,13 +514,19 @@ class OmeUtils(object):
 		return result
 
 
-	def create_group(self, uri, reportId):
+	def create_group(self, uri, attributes):
 		'''create a new group'''
 
 		uri = self.root_uri + uri
 		result = {}
 		
-		payload = [int(reportId)]
+		# for static group
+		payload = {	'GroupModel': 
+						{ 	'Name': attributes['name'],
+							'MembershipTypeId': attributes['membershipId'],
+							'ParentId': attributes['parentId'],
+						}
+					}
 		
 		response = self.send_post_request(uri, payload, HEADERS)
 		if response.status_code == 200:

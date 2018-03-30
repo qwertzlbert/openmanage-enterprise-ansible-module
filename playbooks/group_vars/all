@@ -5,11 +5,17 @@
 # for each individual host
 
 # ome credentials (example)
-omeuser: <Username>
-omepswd: <Password>
+omeuser: <user>
+omepswd: <password>
+
+# Local directory where all results are placed
+# rootdir: /root
+
+# Refers to the hostname, not the OOB controller
+host: "{{inventory_hostname}}"
 
 # Misc
-emailRecipient: local@localhost.com
+emailRecipient: <mailRecipient>
 
 # Discovery
 discStartAddress: 192.168.188.67 # start adress for discovery

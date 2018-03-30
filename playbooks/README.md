@@ -17,5 +17,6 @@
 |              | DownloadReport         | download_report.yml        |                    |
 | Groups       | GetGroups              | get_groups.yml             |                    |
 |              | GetGroupAudits         | get_group_audits.yml       |                    |
+|              | CreateGroup            | create_group.yml           |                    |
 | Device       | 						|							 |					  |
 | Troubleshoot |     					|     						 |					  |

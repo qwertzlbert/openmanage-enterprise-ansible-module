@@ -12,7 +12,7 @@
   - name: create report
     local_action: >
        ome category=Report command=CreateReport omeip={{ omeip }}
-       reportName={{ reportName }}
+       reportName={{ reportName }} omeuser={{omeuser}} omepswd={{omepswd}}
               
   - name: Copy Jobs to output file
     local_action: copy content={{ result | to_nice_json }}
