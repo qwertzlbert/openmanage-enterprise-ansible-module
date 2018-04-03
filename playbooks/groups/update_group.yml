@@ -1,0 +1,27 @@
+- hosts: omehosts
+  name: Update existing OMEnterprise static group
+  gather_facts: False
+
+# id 2414 to add new group to user-defind list
+# groups can also be added to systemd defind groups
+
+  vars:
+    - groupName: newgroup-edit
+    - parentId: 2414
+    - groupId: 11964
+
+  tasks:
+
+  - name: Define output file
+    include: set_output_file.yml type=DiscoveryJobs
+
+  - name: update existing group
+    local_action: >
+       ome category=Group command=CreateGroup omeip={{ omeip }}
+       groupName={{groupName}} groupParentId={{parentId}} groupId={{groupId}}
+       omeuser={{omeuser}} omepswd={{omepswd}}
+       
+#  - name: Copy Jobs to output file
+#   local_action: copy content={{ result | to_nice_json }}
+#             dest={{template}}.json
+ 
