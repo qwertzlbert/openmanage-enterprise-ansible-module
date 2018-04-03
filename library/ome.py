@@ -98,7 +98,9 @@ options:
   groupParentId:
 	required: false
 	  - id of parent group
-author: "simon.schnell@dell.com", github: qwertzlbert
+  groupId:
+	required: false
+	  - group id 
 """
 
 import os
@@ -134,6 +136,7 @@ def main():
 			reportId = dict(required=False, type='str', default=None),
 			groupName = dict(required=False, type='str' , default=None),
 			groupParentId = dict(required=False, type='str' , default=None),
+			groupId = dict(required=False, type='str' , default=None),
 		),
 		supports_check_mode=False
 	)
@@ -163,7 +166,8 @@ def main():
 	# membership id needs to be 12 for static and 24 for dynamic groups
 	group_attributes = {'name': module.params['groupName'],
 						'membershipId': 12,
-						'parentId': module.params['groupParentId']	
+						'parentId': module.params['groupParentId'],	
+						'groupId': module.params['groupId']	
 						}
 
 	# Build initial URI
@@ -218,6 +222,8 @@ def main():
 			result = ome_utils.get_group_audit("/GroupService/GroupAudits")
 		elif command == "CreateGroup":
 			result = ome_utils.create_group("/GroupService/Actions/GroupService.CreateGroup", group_attributes)
+		elif command == "UpdateGroup":
+			result = ome_utils.update_group("/GroupService/Actions/GroupService.UpdateGroup", group_attributes)
 		else:
 			result = { 'ret': False, 'msg': 'Invalid Command'}		
 	

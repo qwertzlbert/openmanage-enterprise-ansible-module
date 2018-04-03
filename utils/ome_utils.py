@@ -538,3 +538,29 @@ class OmeUtils(object):
 			result = { 'ret': False, 'msg': "Error code %s, response: %s" % (response.status_code, response.json()) }
 
 		return result
+		
+	def update_group(self, uri, attributes):
+		'''create a new group'''
+
+		uri = self.root_uri + uri
+		result = {}
+		
+		# for static group
+		payload = {	'GroupModel': 
+						{ 	'Name': attributes['name'],
+							'MembershipTypeId': attributes['membershipId'],
+							'ParentId': attributes['parentId'],
+							'Id': attributes['groupId']
+						}
+					}
+		
+		response = self.send_post_request(uri, payload, HEADERS)
+		if response.status_code == 200:
+			result['ret'] = True
+			data = response.json()
+
+			result['entries'] = data
+		else:
+			result = { 'ret': False, 'msg': "Error code %s, response: %s" % (response.status_code, response.json()) }
+
+		return result

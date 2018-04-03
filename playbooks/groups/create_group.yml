@@ -8,13 +8,14 @@
   vars:
     - groupName: newgroup5
     - parentId: 2414
+    - groupId: 
 
   tasks:
 
   - name: Define output file
     include: set_output_file.yml type=DiscoveryJobs
 
-  - name: create discovery job for {{deviceType}}
+  - name: create new group
     local_action: >
        ome category=Group command=CreateGroup omeip={{ omeip }}
        groupName={{groupName}} groupParentId={{parentId}}
