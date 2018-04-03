@@ -540,7 +540,7 @@ class OmeUtils(object):
 		return result
 		
 	def update_group(self, uri, attributes):
-		'''create a new group'''
+		'''update an existing group'''
 
 		uri = self.root_uri + uri
 		result = {}
@@ -553,6 +553,40 @@ class OmeUtils(object):
 							'Id': attributes['groupId']
 						}
 					}
+		
+		response = self.send_post_request(uri, payload, HEADERS)
+		if response.status_code == 200:
+			result['ret'] = True
+			data = response.json()
+
+			result['entries'] = data
+		else:
+			result = { 'ret': False, 'msg': "Error code %s, response: %s" % (response.status_code, response.json()) }
+
+		return result
+		
+	def clone_group(self, uri, attributes):
+		'''clone an exsiting group'''
+
+		uri = self.root_uri + uri
+		result = {}
+		
+		# for static group
+		payload = { 'Name': attributes['name'],
+					'ParentId': attributes['parentId'],
+					'Description': '',
+					'Id': attributes['groupId']
+				  }
+		
+		
+		# "msg": "Error code 400, response: {'error': 
+		# {'code': 'Base.1.0.GeneralError', 'message': 'A general error has occurred. See ExtendedInfo for more information.',
+		# '@Message.ExtendedInfo': [{'MessageId': 'CGEN1004', 'RelatedProperties': [], 
+		# 'Message': 'Unable to complete the operation because an invalid value is entered for  
+		# failed to lazily initialize a collection of role: com.dell.enterprise.common.integration.db.groupdao.entity.InfrastructureGroup.infrastructureDevices,
+		# could not initialize proxy - no Session .', 'MessageArgs': ['failed to lazily initialize a collection of role: 
+		# com.dell.enterprise.common.integration.db.groupdao.entity.InfrastructureGroup.infrastructureDevices, could not initialize proxy - no Session'],
+		# 'Severity': 'Critical', 'Resolution': 'Enter a valid value for the property identified in the message and retry the operation.'}]}}"			
 		
 		response = self.send_post_request(uri, payload, HEADERS)
 		if response.status_code == 200:

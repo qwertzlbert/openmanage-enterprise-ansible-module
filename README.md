@@ -92,7 +92,7 @@ The [jq](https://stedolan.github.io/jq/) parser to be easy to install and use, h
 
 ```
 
-It should be straight-forward to extract the same data from hundreds of files using shell scripts and organize it accordingly. In the near future scripts will be made available to facilitate data orgnization. For additional help with qt, refer to this [manual](https://shapeshed.com/jq-json/).
+It should be straight-forward to extract the same data from hundreds of files using shell scripts and organize it accordingly. In the near future scripts will be made available to facilitate data orgnization. For additional help with jq, refer to this [manual](https://shapeshed.com/jq-json/).
 
 ## Support
 
@@ -100,4 +100,4 @@ Please note this code is provided as-is and not supported by Dell EMC.
 
 ## Report problems or provide feedback
 
-If you run into any problems or would like to provide feedback, please open an issue [here]().
+If you run into any problems or would like to provide feedback, please open an issue.

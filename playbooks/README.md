@@ -19,5 +19,6 @@
 |              | GetGroupAudits         | get_group_audits.yml       |                    |
 |              | CreateGroup            | create_group.yml           |                    |
 |              | UpdateGroup            | update_group.yml           |                    |
+|              | CloneGroup(not working)| clone _group.yml           |                    | 
 | Device       | 						|							 |					  |
 | Troubleshoot |     					|     						 |					  |

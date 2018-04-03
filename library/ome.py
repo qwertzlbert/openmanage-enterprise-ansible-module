@@ -224,6 +224,10 @@ def main():
 			result = ome_utils.create_group("/GroupService/Actions/GroupService.CreateGroup", group_attributes)
 		elif command == "UpdateGroup":
 			result = ome_utils.update_group("/GroupService/Actions/GroupService.UpdateGroup", group_attributes)
+		elif command == "CloneGroup":
+			result = ome_utils.clone_group("/GroupService/Actions/GroupService.Clone", group_attributes)
+		elif command == "AddDevices":
+			result = ome_utils.add_group_devices("/GroupService/Actions/GroupService.AddMemberDevices", group_attributes)
 		else:
 			result = { 'ret': False, 'msg': 'Invalid Command'}		
 	
